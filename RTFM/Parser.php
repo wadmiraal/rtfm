@@ -24,6 +24,17 @@ class Parser
 
     const P  = 'p';
 
+    const LINK = 'a';
+
+    const BOLD = 'strong';
+
+    const ITALIC = 'em';
+
+    const UNDERLINE = 'u';
+
+    const STRIKETHROUGH = 'del';
+
+    const IMAGE = 'img';
 
     protected $text;
 
@@ -35,7 +46,6 @@ class Parser
     public function __construct($text)
     {
         $this->text = $this->normalize($text);
-
         $this->blockify();
     }
 
@@ -47,6 +57,9 @@ class Parser
         $output = '';
         foreach ($this->blocks as $block) {
             $output .= $block->output();
+        }
+        foreach ($this->inlineClasses() as $instance) {
+            $output = $instance->insert($output);
         }
         return $output;
     }
@@ -99,11 +112,25 @@ class Parser
                 $type = self::P;
             }
 
+            $block_string = $this->inlinify($block_string);
+
             $class = $this->fetchBlockClass($type);
+
             $blocks[] = new $class($block_string);
         }
 
         $this->blocks = $blocks;
+    }
+
+    /**
+     *
+     */
+    protected function inlinify($string)
+    {
+        foreach ($this->inlineClasses() as $instance) {
+            $string = $instance->ownEm($string);
+        }
+        return $string;
     }
 
     /**
@@ -133,5 +160,46 @@ class Parser
             default:
                 return 'RTFM\\Block\\P';
         }
+    }
+
+    /**
+     *
+     */
+    protected function fetchInlineClass($type)
+    {
+        switch ($type) {
+            case self::LINK:
+            default:
+                return 'RTFM\\Inline\\Link';
+                /*
+            case self::BOLD:
+                return 'RTFM\\Inline\\Bold';
+            case self::ITALIC:
+                return 'RTFM\\Inline\\Italic';
+            case self::UNDERLINE:
+                return 'RTFM\\Block\\Underline';
+            case self::STRIKETHROUGH:
+                return 'RTFM\\Block\\Strikethrough';
+            case self::IMAGE:
+                return 'RTFM\\Block\\Image';
+                */
+        }
+    }
+
+    /**
+     *
+     */
+    protected function inlineClasses()
+    {
+        static $inline_classes = array();
+
+        if (empty($inline_classes)) {
+            foreach (array(self::LINK, self::BOLD, self::ITALIC, self::UNDERLINE, self::STRIKETHROUGH, self::IMAGE) as $type) {
+                $class = $this->fetchInlineClass($type);
+                $inline_classes[$type] = new $class();
+            }
+        }
+
+        return $inline_classes;
     }
 }
