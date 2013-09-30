@@ -2,9 +2,9 @@
 
 namespace RTFM\Block;
 
-use RTFM\Block\IBlock;
+use RTFM\Block\AbstractBlock;
 
-class H5 implements IBlock
+class BaseP extends AbstractBlock
 {
     protected $text;
 
@@ -16,7 +16,7 @@ class H5 implements IBlock
     public function __construct($text)
     {
         $this->text = $text;
-        $this->formatted = "\n<h5>" . preg_replace('/^!{2}/', '', $text) . '</h5>';
+        $this->formatted = "\n<p>" . $text . '</p>';
     }
 
     /**

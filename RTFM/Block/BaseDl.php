@@ -2,28 +2,36 @@
 
 namespace RTFM\Block;
 
-use RTFM\Block\IBlock;
+use RTFM\Block\BaseList;
 
-class Ol implements IBlock
+class BaseDl extends BaseList
 {
+    /**
+     * @inherit
+     */
+    protected static $symbol = '-';
+
     /**
      *
      */
     public function __construct($text)
     {
         $this->text = $text;
-        $this->formatted = "\n<ol>" . $this->listIt() . "\n</ol>";
+        $this->formatted = "\n<dl>" . $this->listIt() . "\n</dl>";
     }
 
-    protected function listIt()
+    protected function __listIt()
     {
         $list = '';
         $first = true;
         $items = explode("\n", $this->text);
         foreach ($items as $item) {
             // New item.
-            if (preg_match('/^#{1}/', $item)) {
-                $list .= ($first ? '' : '</li>') . "\n\t<li>" . ltrim(preg_replace('/^#{1}/', '', $item));
+            if (preg_match('/^\-{1}/', $item)) {
+                $parts = explode(':', $item);
+                $definition = array_pop($parts);
+                $title = implode(':', $parts);
+                $list .= ($first ? '' : '</dd>') . "\n\t<dt>" . trim(preg_replace('/^\-{1}/', '', $title)) . "</dt>\n\t<dd>" . trim($definition);
             }
             // Just a new line, but still the same item.
             else {
@@ -34,7 +42,7 @@ class Ol implements IBlock
                 $first = false;
             }
         }
-        return $list . '</li>';
+        return $list . '</dd>';
     }
 
     /**

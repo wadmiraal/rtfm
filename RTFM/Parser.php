@@ -233,25 +233,25 @@ class Parser
     {
         switch ($type) {
             case self::H1:
-                return 'RTFM\\Block\\H1';
+                return 'RTFM\\Block\\BaseH1';
             case self::H2:
-                return 'RTFM\\Block\\H2';
+                return 'RTFM\\Block\\BaseH2';
             case self::H3:
-                return 'RTFM\\Block\\H3';
+                return 'RTFM\\Block\\BaseH3';
             case self::H4:
-                return 'RTFM\\Block\\H4';
+                return 'RTFM\\Block\\BaseH4';
             case self::H5:
-                return 'RTFM\\Block\\H5';
+                return 'RTFM\\Block\\BaseH5';
             case self::H6:
-                return 'RTFM\\Block\\H6';
+                return 'RTFM\\Block\\BaseH6';
             case self::UL:
-                return 'RTFM\\Block\\Ul';
+                return 'RTFM\\Block\\BaseUl';
             case self::OL:
-                return 'RTFM\\Block\\Ol';
+                return 'RTFM\\Block\\BaseOl';
             case self::DL:
-                return 'RTFM\\Block\\Dl';
+                return 'RTFM\\Block\\BaseDl';
             default:
-                return 'RTFM\\Block\\P';
+                return 'RTFM\\Block\\BaseP';
         }
     }
 

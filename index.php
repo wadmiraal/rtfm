@@ -1,17 +1,19 @@
 <?php
 
 require "RTFM/Parser.php";
-require "RTFM/Block/IBlock.php";
-require "RTFM/Block/H1.php";
-require "RTFM/Block/H2.php";
-require "RTFM/Block/H3.php";
-require "RTFM/Block/H4.php";
-require "RTFM/Block/H5.php";
-require "RTFM/Block/H6.php";
-require "RTFM/Block/Ul.php";
-require "RTFM/Block/Ol.php";
-require "RTFM/Block/Dl.php";
-require "RTFM/Block/P.php";
+require "RTFM/Block/BlockInterface.php";
+require "RTFM/Block/AbstractBlock.php";
+require "RTFM/Block/BaseList.php";
+require "RTFM/Block/BaseH1.php";
+require "RTFM/Block/BaseH2.php";
+require "RTFM/Block/BaseH3.php";
+require "RTFM/Block/BaseH4.php";
+require "RTFM/Block/BaseH5.php";
+require "RTFM/Block/BaseH6.php";
+require "RTFM/Block/BaseUl.php";
+require "RTFM/Block/BaseOl.php";
+require "RTFM/Block/BaseDl.php";
+require "RTFM/Block/BaseP.php";
 require "RTFM/Inline/IInline.php";
 require "RTFM/Inline/Link.php";
 

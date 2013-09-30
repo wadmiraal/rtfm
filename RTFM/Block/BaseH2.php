@@ -1,21 +1,16 @@
 <?php
 
-/**
- * @file
- * Defines the base H1 block element.
- */
-
 namespace RTFM\Block;
 
 use RTFM\Block\AbstractBlock;
 
-class BaseH1 extends AbstractBlock
+class BaseH2 extends AbstractBlock
 {
     /**
      * @inherit
      */
     public static function register($string) {
-        return preg_match('/^!{6}/', $string);
+        return preg_match('/^!{5}/', $string);
     }
 
     /**
@@ -23,6 +18,6 @@ class BaseH1 extends AbstractBlock
      */
     public function output()
     {
-        return preg_replace('/^!{6}/', '', $this->text);
+        return preg_replace('/^!{5}/', '', $this->text);
     }
 }

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Defines the link element.
+ */
+
 namespace RTFM\Inline;
 
 use RTFM\Inline\IInline;
