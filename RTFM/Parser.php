@@ -1,56 +1,140 @@
 <?php
 
+/**
+ * @file
+ * Defines the RTFM format main parser.
+ *
+ * The Parser takes a string and transforms it to HTML output. 
+ * Form more information about the syntax, check the README.rtfm file.
+ */
+
 namespace RTFM;
 
 class Parser
 {
+    /**
+     * @const string
+     * Defines an 1st level title block element.
+     */
     const H1 = 'h1';
 
+    /**
+     * @const string
+     * Defines a 2nd level title block element.
+     */
     const H2 = 'h2';
 
+    /**
+     * @const string
+     * Defines a 3rd level title block element.
+     */
     const H3 = 'h3';
 
+    /**
+     * @const string 
+     * Defines a 4th level title block element.
+     */
     const H4 = 'h4';
 
+    /**
+     * @const string
+     * Defines a 5th level title block element.
+     */
     const H5 = 'h5';
 
+    /**
+     * @const string
+     * Defines a 6th level title block element.
+     */
     const H6 = 'h6';
 
+    /**
+     * @const string
+     * Defines an unordered list block element.
+     */
     const UL = 'ul';
 
+    /**
+     * @const string
+     * Defines an ordered list block element.
+     */
     const OL = 'ol';
 
+    /**
+     * @const string
+     * Defines a definition list block element.
+     */
     const DL = 'dl';
 
+    /**
+     * @const string
+     * Defines a paragraph block element.
+     */
     const P  = 'p';
 
+    /**
+     * @const string
+     * Defines a link inline element.
+     */
     const LINK = 'a';
 
+    /**
+     * @const string
+     * Defines a blod inline element.
+     */
     const BOLD = 'strong';
 
+    /**
+     * @const string
+     * Defines a emphasize inline element.
+     */
     const ITALIC = 'em';
 
+    /**
+     * @const string
+     * Defines a underline inline element.
+     */
     const UNDERLINE = 'u';
 
+    /**
+     * @const string
+     * Defines a striked through inline element.
+     */
     const STRIKETHROUGH = 'del';
 
+    /**
+     * @const string
+     * Defines a image inline element.
+     */
     const IMAGE = 'img';
 
+    /**
+     * @var array
+     * Contains the text to parse.
+     */
     protected $text;
 
+    /**
+     * @var array
+     * Contains the list of block element instances.
+     */
     protected $blocks;
 
     /**
+     * Constructor...
      *
+     * @param  string $text
      */
     public function __construct($text)
     {
-        $this->text = $this->normalize($text);
+        $this->normalize();
         $this->blockify();
     }
 
     /**
+     * Outputs the parsed text.
      *
+     * @return string
      */
     public function output()
     {
@@ -65,15 +149,15 @@ class Parser
     }
 
     /**
-     *
+     * Normalize the line feeds by converting all \r and \r\n to \n.
      */
-    protected function normalize($text)
+    protected function normalize()
     {
-        return str_replace(array("\r\n", "\r"), "\n", $text);
+        $this->text = str_replace(array("\r\n", "\r"), "\n", $this->text);
     }
 
     /**
-     *
+     * Parse the text and seperate it into block elements.
      */
     protected function blockify()
     {
@@ -123,7 +207,11 @@ class Parser
     }
 
     /**
+     * Call all available inline classes and make them register their string instances.
+     * 
+     * @param  string $string
      *
+     * @return string
      */
     protected function inlinify($string)
     {
@@ -134,7 +222,12 @@ class Parser
     }
 
     /**
+     * Helper method to fetch the used block class.
+     * 
+     * @param  string $type
+     *         One of the block element constants.
      *
+     * @return string
      */
     protected function fetchBlockClass($type)
     {
@@ -163,7 +256,12 @@ class Parser
     }
 
     /**
+     * Helper method to fetch an inline class.
+     * 
+     * @param  string $type
+     *         One of the inline element constants.
      *
+     * @return string
      */
     protected function fetchInlineClass($type)
     {
@@ -187,7 +285,9 @@ class Parser
     }
 
     /**
+     * Return a list of inline element class instances.
      *
+     * @return array
      */
     protected function inlineClasses()
     {
