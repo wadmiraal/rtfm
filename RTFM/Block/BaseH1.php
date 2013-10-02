@@ -12,17 +12,9 @@ use RTFM\Block\AbstractBlock;
 class BaseH1 extends AbstractBlock
 {
     /**
-     * @inherit
+     * @{inheritDoc}
      */
     public static function register($string) {
-        return preg_match('/^!{6}/', $string);
-    }
-
-    /**
-     * @inherit
-     */
-    public function output()
-    {
-        return preg_replace('/^!{6}/', '', $this->text);
+        return !!preg_match('/^!{6}/', trim($string));
     }
 }

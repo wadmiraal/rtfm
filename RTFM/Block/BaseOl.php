@@ -7,16 +7,22 @@ use RTFM\Block\BaseList;
 class BaseOl extends BaseList
 {
     /**
-     * @inherit
+     * @{inheritDoc}
      */
     protected static $symbol = '#';
 
     /**
-     * @inherit
+     * @{inheritDoc}
      */
     public function output()
     {
         $this->listIt();
-        return !empty($this->list) ? ' # ' . implode("\n # ", $this->list) : '';
+        $output = '';
+        if (!empty($this->list)) {
+            foreach (array_values($this->list) as $i => $item) {
+                $output .= ($i ? "\n" : '') . "$i.$item";
+            }
+        }
+        return $output;
     }
 }

@@ -127,6 +127,7 @@ class Parser
      */
     public function __construct($text)
     {
+        $this->text = $text;
         $this->normalize();
         $this->blockify();
     }
@@ -140,10 +141,7 @@ class Parser
     {
         $output = '';
         foreach ($this->blocks as $block) {
-            $output .= $block->output();
-        }
-        foreach ($this->inlineClasses() as $instance) {
-            $output = $instance->insert($output);
+            $output .= "\n\n" . $block->output();
         }
         return $output;
     }
@@ -161,49 +159,17 @@ class Parser
      */
     protected function blockify()
     {
-        $blocks = array();
+        $this->blocks = array();
         $block_strings = explode("\n\n", $this->text);
 
         foreach ($block_strings as $block_string) {
-            if (preg_match('/^!{6}/', $block_string)) {
-                $type = self::H1;
+            foreach ($this->blockClasses() as $type => $class) {
+                if ($class::register($block_string)) {
+                    $this->blocks[] = new $class($block_string);
+                    continue;
+                }
             }
-            elseif (preg_match('/^!{5}/', $block_string)) {
-                $type = self::H2;
-            }
-            elseif (preg_match('/^!{4}/', $block_string)) {
-                $type = self::H3;
-            }
-            elseif (preg_match('/^!{3}/', $block_string)) {
-                $type = self::H4;
-            }
-            elseif (preg_match('/^!{2}/', $block_string)) {
-                $type = self::H5;
-            }
-            elseif (preg_match('/^!/', $block_string)) {
-                $type = self::H6;
-            }
-            elseif (preg_match('/^\*/', $block_string)) {
-                $type = self::UL;
-            }
-            elseif (preg_match('/^#/', $block_string)) {
-                $type = self::OL;
-            }
-            elseif (preg_match('/^-/', $block_string)) {
-                $type = self::DL;
-            }
-            else {
-                $type = self::P;
-            }
-
-            $block_string = $this->inlinify($block_string);
-
-            $class = $this->fetchBlockClass($type);
-
-            $blocks[] = new $class($block_string);
         }
-
-        $this->blocks = $blocks;
     }
 
     /**
@@ -231,57 +197,51 @@ class Parser
      */
     protected function fetchBlockClass($type)
     {
-        switch ($type) {
-            case self::H1:
-                return 'RTFM\\Block\\BaseH1';
-            case self::H2:
-                return 'RTFM\\Block\\BaseH2';
-            case self::H3:
-                return 'RTFM\\Block\\BaseH3';
-            case self::H4:
-                return 'RTFM\\Block\\BaseH4';
-            case self::H5:
-                return 'RTFM\\Block\\BaseH5';
-            case self::H6:
-                return 'RTFM\\Block\\BaseH6';
-            case self::UL:
-                return 'RTFM\\Block\\BaseUl';
-            case self::OL:
-                return 'RTFM\\Block\\BaseOl';
-            case self::DL:
-                return 'RTFM\\Block\\BaseDl';
-            default:
-                return 'RTFM\\Block\\BaseP';
-        }
+        $block_classes = $this->blockClasses();
+        return !empty($block_classes[$type]) ? $block_classes[$type] : NULL;
     }
 
     /**
-     * Helper method to fetch an inline class.
+     * Return a list of block classes.
+     *
+     * @return array
+     */
+    protected function blockClasses()
+    {
+        static $block_classes = array();
+
+        if (empty($block_classes)) {
+            foreach (array(
+                self::H1 => 'RTFM\\Block\\BaseH1',
+                self::H2 => 'RTFM\\Block\\BaseH2',
+                self::H3 => 'RTFM\\Block\\BaseH3',
+                self::H4 => 'RTFM\\Block\\BaseH4',
+                self::H5 => 'RTFM\\Block\\BaseH5',
+                self::H6 => 'RTFM\\Block\\BaseH6',
+                self::UL => 'RTFM\\Block\\BaseUl',
+                self::OL => 'RTFM\\Block\\BaseOl',
+                self::DL => 'RTFM\\Block\\BaseDl',
+                self::P  => 'RTFM\\Block\\BaseP',
+            ) as $type => $class) {
+                $block_classes[$type] = $class;
+            }
+        }
+
+        return $block_classes;
+    }
+
+    /**
+     * Helper method to fetch an inline class instance.
      * 
      * @param  string $type
      *         One of the inline element constants.
      *
-     * @return string
+     * @return InlineInterface|null
      */
     protected function fetchInlineClass($type)
     {
-        switch ($type) {
-            case self::LINK:
-            default:
-                return 'RTFM\\Inline\\Link';
-                /*
-            case self::BOLD:
-                return 'RTFM\\Inline\\Bold';
-            case self::ITALIC:
-                return 'RTFM\\Inline\\Italic';
-            case self::UNDERLINE:
-                return 'RTFM\\Block\\Underline';
-            case self::STRIKETHROUGH:
-                return 'RTFM\\Block\\Strikethrough';
-            case self::IMAGE:
-                return 'RTFM\\Block\\Image';
-                */
-        }
+        $inline_classes = $this->inlineClasses();
+        return !empty($inline_classes[$type]) ? $inline_classes[$type] : NULL;
     }
 
     /**
@@ -294,8 +254,14 @@ class Parser
         static $inline_classes = array();
 
         if (empty($inline_classes)) {
-            foreach (array(self::LINK, self::BOLD, self::ITALIC, self::UNDERLINE, self::STRIKETHROUGH, self::IMAGE) as $type) {
-                $class = $this->fetchInlineClass($type);
+            foreach (array(
+                self::LINK => 'RTFM\\Inline\\Link', 
+                self::BOLD => 'RTFM\\Inline\\Bold', 
+                self::ITALIC => 'RTFM\\Inline\\Italic', 
+                self::UNDERLINE => 'RTFM\\Inline\\Underline', 
+                self::STRIKETHROUGH => 'RTFM\\Inline\\Strikethrough', 
+                self::IMAGE => 'RTFM\\Inline\\Image'
+            ) as $type) {
                 $inline_classes[$type] = new $class();
             }
         }

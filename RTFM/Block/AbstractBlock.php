@@ -18,9 +18,14 @@ abstract class AbstractBlock implements BlockInterface
     protected $text;
 
     /**
-     * @inherit
+     * @{inheritDoc}
+     *
+     * @throws Exception Method must be overriden.
      */
-    abstract public static function register($string);
+    public static function register($string)
+    {
+        throw new Exception("This method should be overriden.", 1);
+    }
 
     /**
      * Constructor...
@@ -29,6 +34,15 @@ abstract class AbstractBlock implements BlockInterface
      */
     public function __construct($text)
     {
-        $this->text = $text;
+        $this->text = trim($text);
+    }
+
+
+    /**
+     * @{inheritDoc}
+     */
+    public function output()
+    {
+        return $this->text;
     }
 }

@@ -7,18 +7,9 @@ use RTFM\Block\BaseList;
 class BaseDl extends BaseList
 {
     /**
-     * @inherit
+     * @{inheritDoc}
      */
     protected static $symbol = '-';
-
-    /**
-     *
-     */
-    public function __construct($text)
-    {
-        $this->text = $text;
-        $this->formatted = "\n<dl>" . $this->listIt() . "\n</dl>";
-    }
 
     protected function __listIt()
     {
@@ -43,13 +34,5 @@ class BaseDl extends BaseList
             }
         }
         return $list . '</dd>';
-    }
-
-    /**
-     *
-     */
-    public function output()
-    {
-        return $this->formatted;
     }
 }

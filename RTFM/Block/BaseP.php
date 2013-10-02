@@ -6,24 +6,12 @@ use RTFM\Block\AbstractBlock;
 
 class BaseP extends AbstractBlock
 {
-    protected $text;
-
-    protected $formatted;
-
     /**
-     *
+     * @{inheritDoc}
      */
-    public function __construct($text)
+    public static function register($string) 
     {
-        $this->text = $text;
-        $this->formatted = "\n<p>" . $text . '</p>';
-    }
-
-    /**
-     *
-     */
-    public function output()
-    {
-        return $this->formatted;
+        $string = trim($string);
+        return !empty($string);
     }
 }

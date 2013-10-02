@@ -7,17 +7,9 @@ use RTFM\Block\AbstractBlock;
 class BaseH3 extends AbstractBlock
 {
     /**
-     * @inherit
+     * @{inheritDoc}
      */
     public static function register($string) {
-        return preg_match('/^!{4}/', $string);
-    }
-
-    /**
-     * @inherit
-     */
-    public function output()
-    {
-        return preg_replace('/^!{4}/', '', $this->text);
+        return !!preg_match('/^!{4}/', trim($string));
     }
 }

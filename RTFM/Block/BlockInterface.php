@@ -13,5 +13,10 @@ interface BlockInterface
      */
     public static function register($string);
 
+    /**
+     * Output the block.
+     *
+     * @return string
+     */
     public function output();
 }

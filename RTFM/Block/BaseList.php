@@ -19,14 +19,14 @@ class BaseList extends AbstractBlock
     protected static $symbol;
 
     /**
-     * @inherit
+     * @{inheritDoc}
      */
     public static function register($string) {
-        return preg_match('/^' . self::$symbol . '/', $string);
+        return preg_match('/^' . self::$symbol . '/', trim($string));
     }
 
     /**
-     * @inherit
+     * @{inheritDoc}
      */
     public function output()
     {
