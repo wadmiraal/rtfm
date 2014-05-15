@@ -11,18 +11,22 @@ describe( 'rtfm', function() {
         });
 
         it( 'its methods are chainable', function() {
-            expect( rtfm.reset().registerBlockPlugin( 'plugin', {} ).registerInlinePlugin( 'plugin', {} ) ).toEqual( rtfm );
+            expect( rtfm
+                        .reset()
+                        .registerBlockPlugin( 'plugin', {} )
+                        .registerInlinePlugin( 'plugin', {} )
+            ).toEqual( rtfm );
         });
 
         it( 'can be reset', function() {
-            rtfm.registerBlockPlugin( 'plugin', {} );
-            rtfm.registerInlinePlugin( 'plugin', {} );
-            expect( rtfm.blockPlugins.plugin ).toBeDefined();
-            expect( rtfm.inlinePlugins.plugin ).toBeDefined();
+            rtfm.registerBlockPlugin( 'plugin1', {} );
+            rtfm.registerInlinePlugin( 'plugin2', {} );
+            expect( rtfm.blockPlugins.plugin1 ).toBeDefined();
+            expect( rtfm.inlinePlugins.plugin2 ).toBeDefined();
 
             rtfm.reset();
-            expect( rtfm.blockPlugins.plugin ).not.toBeDefined();
-            expect( rtfm.inlinePlugins.plugin ).not.toBeDefined();
+            expect( rtfm.blockPlugins.plugin1 ).not.toBeDefined();
+            expect( rtfm.inlinePlugins.plugin2 ).not.toBeDefined();
         });
 
     });
