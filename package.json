@@ -5,10 +5,10 @@
   "main": "index.js",
   "bin" : "bin/cli.js",
   "directories": {
-    "test": "test"
+    "test": "spec"
   },
   "scripts": {
-    "test": "jasmine-node spec"
+    "test": "jasmine-node spec --matchall"
   },
   "repository": {
     "type": "git",
