@@ -10,6 +10,10 @@ describe( 'rtfm', function() {
             expect( rtfm ).toBeDefined();
         });
 
+        it( 'its methods are chainable', function() {
+            expect( rtfm.registerBlockPlugin( 'plugin', {} ).registerInlinePlugin( 'plugin', {} ) ).toEqual( rtfm );
+        });
+
     });
 
     describe( 'when normalizing a string', function() {
