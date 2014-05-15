@@ -34,7 +34,6 @@ describe( 'rtfm', function() {
     describe( 'When blockifying a string', function() {
 
         it( 'should split all paragraphs and return an array', function() {
-
             var tests = {
                 'Hi all': [ 'Hi all' ],
                 'Hi\nall': [ 'Hi\nall' ],
@@ -48,6 +47,24 @@ describe( 'rtfm', function() {
             for ( var string in tests ) {
                 expect( rtfm.blockify( string ) ).toEqual( tests[ string ] );
             }
+        });
+
+    });
+
+    describe( 'When registering a block plugin', function() {
+
+        it( 'should be stored', function() {
+            var plugin = {};
+            rtfm.registerBlockPlugin( 'plugin', plugin );
+            expect( rtfm.blockPlugins.plugin ).toBeDefined();
+        });
+
+        it( 'should be registered for specific blocks', function() {
+            var plugin = {
+                register: function( string ) { return true; }
+            };
+            rtfm.registerBlockPlugin( 'plugin', plugin );
+            expect( rtfm.findBlockPlugin( 'String' ) ).toEqual( plugin );
         });
 
     });
