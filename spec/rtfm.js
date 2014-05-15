@@ -80,6 +80,40 @@ describe( 'rtfm', function() {
             rtfm.registerInlinePlugin( 'plugin', plugin );
             expect( rtfm.inlinePlugins.plugin ).toBeDefined();
         });
+
+        it( 'should be registered for specific strings', function() {
+            var plugin = {
+                register: function( string ) {
+                    if ( string === '*bold*' ) {
+                        return [
+                            { string: '', register: false },
+                            { string: 'bold', register: true },
+                            { string: '', register: false }
+                        ];
+                    }
+                }
+            };
+            rtfm.registerInlinePlugin( 'plugin', plugin );
+            expect( rtfm.findInlinePlugins( '*bold*' ) ).toEqual([
+                {
+                    string: '',
+                    inlinePlugin: 'plain/text'
+                },
+                {
+                    string: 'bold',
+                    inlinePlugin: 'plugin',
+                    children: [{
+                        string: 'bold',
+                        inlinePlugin: 'plain/text'
+                    }]
+                },
+                {
+                    string: '',
+                    inlinePlugin: 'plain/text'
+                }
+            ]);
+        });
+
     });
 
 });
