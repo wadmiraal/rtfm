@@ -42,7 +42,7 @@ describe( 'rtfm', function() {
                 'Hi\n\n\nall': [ 'Hi', 'all' ],
                 '     Hi\nall': [ 'Hi\nall' ],
                 '    Hi\n\n\n    all': [ 'Hi', 'all' ],
-                'Hi\n\n\nall\n\nthere\n\n   people': [ 'Hi', 'all', 'there', 'poeple' ]
+                'Hi\n\n\nall\n\nthere\n\n   people': [ 'Hi', 'all', 'there', 'people' ]
             };
 
             for ( var string in tests ) {
