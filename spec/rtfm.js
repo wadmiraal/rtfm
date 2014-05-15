@@ -69,4 +69,13 @@ describe( 'rtfm', function() {
 
     });
 
+    describe( 'When registering an inline plugin', function() {
+
+        it( 'should be stored', function() {
+            var plugin = {};
+            rtfm.registerInlinePlugin( 'plugin', plugin );
+            expect( rtfm.inlinePlugins.plugin ).toBeDefined();
+        });
+    });
+
 });
