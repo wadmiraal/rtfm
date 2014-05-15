@@ -75,14 +75,7 @@ describe( 'rtfm', function() {
         });
 
         it( 'should be registered for specific blocks', function() {
-            var plugin = {
-                register: function( string ) {
-                    return [{
-                        plugin: 'plugin',
-                        string: string
-                    }];
-                }
-            };
+            var plugin = mock.createBlockPlugin();
             rtfm.registerBlockPlugin( 'plugin', plugin );
             expect( rtfm.findBlockPlugins( 'String' ) ).toEqual([{
                 plugin: 'plugin',
@@ -167,17 +160,7 @@ describe( 'rtfm', function() {
 
             rtfm.reset();
 
-            var blockPlugin = {
-                register: function( string ) {
-                    return [{
-                        plugin: 'plugin',
-                        string: string
-                    }];
-                },
-                output: function( string ) {
-                    return '<p>' + string + '</p>';
-                }
-            };
+            var blockPlugin = mock.createBlockPlugin();
             rtfm.registerBlockPlugin( 'plugin', blockPlugin );
 
             var inlinePlugin = mock.createInlinePlugin();
@@ -240,6 +223,20 @@ describe( 'rtfm', function() {
                 },
                 output: function( string ) {
                     return '<strong>' + string + '</strong>';
+                }
+            };
+        },
+
+        createBlockPlugin: function() {
+            return {
+                register: function( string ) {
+                    return [{
+                        plugin: 'plugin',
+                        string: string
+                    }];
+                },
+                output: function( string ) {
+                    return '<p>' + string + '</p>';
                 }
             };
         }
