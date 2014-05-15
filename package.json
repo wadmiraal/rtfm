@@ -1,8 +1,9 @@
 {
-  "name": "RTFM",
+  "name": "rtfm",
   "version": "0.0.1",
   "description": "Parse .rtfm files and provide HTML output.",
   "main": "index.js",
+  "bin" : "bin/cli.js",
   "directories": {
     "test": "test"
   },
@@ -16,5 +17,12 @@
   "author": "Wouter Admiraal",
   "license": "MIT",
   "readmeFilename": "README.md",
-  "gitHead": "bc6ddb390ff38896678bef4d44a395959799e0f2"
+  "gitHead": "bc6ddb390ff38896678bef4d44a395959799e0f2",
+  "dependencies": {
+    "minimist": ">= 0.1.0"
+  },
+  "devDependencies": {
+   "jasmine-node": "",
+   "should": ""
+ }
 }
