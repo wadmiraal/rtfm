@@ -67,14 +67,14 @@ describe( 'rtfm', function() {
             var plugin = {
                 register: function( string ) {
                     return [{
-                        blockPlugin: 'plugin',
+                        plugin: 'plugin',
                         string: string
                     }];
                 }
             };
             rtfm.registerBlockPlugin( 'plugin', plugin );
             expect( rtfm.findBlockPlugins( 'String' ) ).toEqual([{
-                blockPlugin: 'plugin',
+                plugin: 'plugin',
                 string: 'String'
             }]);
         });
@@ -120,6 +120,77 @@ describe( 'rtfm', function() {
                     inlinePlugin: 'plain/text'
                 }
             ]);
+        });
+
+    });
+
+    describe( 'When constructing a syntax tree', function() {
+
+        it( 'should work, dammit', function() {
+            var string = 'My first block\n\n   My second *bold text* containing block';
+            var expected = {
+                originalString: string,
+                blocks: [
+                    {
+                        blockString: 'My first block',
+                        blockPlugin: 'plugin',
+                        children: [{
+                            string: 'My first block',
+                            inlinePlugin: 'plain/text'
+                        }]
+                    },
+                    {
+                        blockString: 'My second *bold text* containing block',
+                        blockPlugin: 'plugin',
+                        children: [
+                            {
+                                string: 'My second ',
+                                inlinePlugin: 'plain/text'
+                            },
+                            {
+                                string: 'bold text',
+                                inlinePlugin: 'bold',
+                                children: [{
+                                    string: 'bold text',
+                                    inlinePlugin: 'plain/text'
+                                }]
+                            },
+                            {
+                                string: ' containing block',
+                                inlinePlugin: 'plain/text'
+                            }
+                        ]
+                    }
+                ]
+            };
+            // @todo
+            rtfm.inlinePlugins = [];
+            rtfm.blockPlugins = [];
+
+            var blockPlugin = {
+                register: function( string ) {
+                    return [{
+                        plugin: 'plugin',
+                        string: string
+                    }];
+                }
+            };
+            rtfm.registerBlockPlugin( 'plugin', blockPlugin );
+
+            var inlinePlugin = {
+                register: function( string ) {
+                    if ( string === 'My second *bold text* containing block' ) {
+                        return [
+                            { string: 'My second ', register: false },
+                            { string: 'bold text', register: true },
+                            { string: ' containing block', register: false }
+                        ];
+                    }
+                }
+            };
+            rtfm.registerInlinePlugin( 'bold', inlinePlugin );
+
+            expect( rtfm.constructTree( string ) ).toEqual( expected );
         });
 
     });
