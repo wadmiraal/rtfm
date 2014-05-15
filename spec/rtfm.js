@@ -65,10 +65,18 @@ describe( 'rtfm', function() {
 
         it( 'should be registered for specific blocks', function() {
             var plugin = {
-                register: function( string ) { return true; }
+                register: function( string ) {
+                    return [{
+                        blockPlugin: 'plugin',
+                        string: string
+                    }];
+                }
             };
             rtfm.registerBlockPlugin( 'plugin', plugin );
-            expect( rtfm.findBlockPlugin( 'String' ) ).toEqual( plugin );
+            expect( rtfm.findBlockPlugins( 'String' ) ).toEqual([{
+                blockPlugin: 'plugin',
+                string: 'String'
+            }]);
         });
 
     });
