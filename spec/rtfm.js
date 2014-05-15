@@ -183,6 +183,9 @@ describe( 'rtfm', function() {
                         plugin: 'plugin',
                         string: string
                     }];
+                },
+                output: function( string ) {
+                    return '<p>' + string + '</p>';
                 }
             };
             rtfm.registerBlockPlugin( 'plugin', blockPlugin );
@@ -196,11 +199,46 @@ describe( 'rtfm', function() {
                             { string: ' containing block', register: false }
                         ];
                     }
+                },
+                output: function( string ) {
+                    return '<strong>' + string + '</strong>';
                 }
             };
             rtfm.registerInlinePlugin( 'bold', inlinePlugin );
 
             expect( rtfm.constructTree( string ) ).toEqual( expected );
+        });
+
+    });
+
+    describe( 'When rendering an array of inline elements', function() {
+
+        it( 'should construct the string', function() {
+            var inlinePlugin = {
+                output: function( string ) {
+                    return '<strong>' + string + '</strong>';
+                }
+            };
+            rtfm.registerInlinePlugin( 'bold', inlinePlugin );
+            var elements = [
+                {
+                    string: 'My second ',
+                    inlinePlugin: 'plain/text'
+                },
+                {
+                    string: 'bold text',
+                    inlinePlugin: 'bold',
+                    children: [{
+                        string: 'bold text',
+                        inlinePlugin: 'plain/text'
+                    }]
+                },
+                {
+                    string: ' containing block',
+                    inlinePlugin: 'plain/text'
+                }
+            ];
+            expect( rtfm.outputInlineElements( elements ) ).toEqual( 'My second <strong>bold text</strong> containing block' );
         });
 
     });
