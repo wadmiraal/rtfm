@@ -31,4 +31,25 @@ describe( 'rtfm', function() {
 
     });
 
+    describe( 'When blockifying a string', function() {
+
+        it( 'should split all paragraphs and return an array', function() {
+
+            var tests = {
+                'Hi all': [ 'Hi all' ],
+                'Hi\nall': [ 'Hi\nall' ],
+                'Hi\n\nall': [ 'Hi', 'all' ],
+                'Hi\n\n\nall': [ 'Hi', 'all' ],
+                '     Hi\nall': [ 'Hi\nall' ],
+                '    Hi\n\n\n    all': [ 'Hi', 'all' ],
+                'Hi\n\n\nall\n\nthere\n\n   people': [ 'Hi', 'all', 'there', 'poeple' ]
+            };
+
+            for ( var string in tests ) {
+                expect( rtfm.blockify( string ) ).toEqual( tests[ string ] );
+            }
+        });
+
+    });
+
 });
