@@ -11,7 +11,18 @@ describe( 'rtfm', function() {
         });
 
         it( 'its methods are chainable', function() {
-            expect( rtfm.registerBlockPlugin( 'plugin', {} ).registerInlinePlugin( 'plugin', {} ) ).toEqual( rtfm );
+            expect( rtfm.reset().registerBlockPlugin( 'plugin', {} ).registerInlinePlugin( 'plugin', {} ) ).toEqual( rtfm );
+        });
+
+        it( 'can be reset', function() {
+            rtfm.registerBlockPlugin( 'plugin', {} );
+            rtfm.registerInlinePlugin( 'plugin', {} );
+            expect( rtfm.blockPlugins.plugin ).toBeDefined();
+            expect( rtfm.inlinePlugins.plugin ).toBeDefined();
+
+            rtfm.reset();
+            expect( rtfm.blockPlugins.plugin ).not.toBeDefined();
+            expect( rtfm.inlinePlugins.plugin ).not.toBeDefined();
         });
 
     });
@@ -163,9 +174,8 @@ describe( 'rtfm', function() {
                     }
                 ]
             };
-            // @todo
-            rtfm.inlinePlugins = [];
-            rtfm.blockPlugins = [];
+
+            rtfm.reset();
 
             var blockPlugin = {
                 register: function( string ) {
