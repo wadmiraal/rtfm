@@ -101,17 +101,7 @@ describe( 'rtfm', function() {
         });
 
         it( 'should be registered for specific strings', function() {
-            var plugin = {
-                register: function( string ) {
-                    if ( string === '*bold*' ) {
-                        return [
-                            { string: '', register: false },
-                            { string: 'bold', register: true },
-                            { string: '', register: false }
-                        ];
-                    }
-                }
-            };
+            var plugin = mock.createInlinePlugin();
             rtfm.registerInlinePlugin( 'plugin', plugin );
             expect( rtfm.findInlinePlugins( '*bold*' ) ).toEqual([
                 {
@@ -190,20 +180,7 @@ describe( 'rtfm', function() {
             };
             rtfm.registerBlockPlugin( 'plugin', blockPlugin );
 
-            var inlinePlugin = {
-                register: function( string ) {
-                    if ( string === 'My second *bold text* containing block' ) {
-                        return [
-                            { string: 'My second ', register: false },
-                            { string: 'bold text', register: true },
-                            { string: ' containing block', register: false }
-                        ];
-                    }
-                },
-                output: function( string ) {
-                    return '<strong>' + string + '</strong>';
-                }
-            };
+            var inlinePlugin = mock.createInlinePlugin();
             rtfm.registerInlinePlugin( 'bold', inlinePlugin );
 
             expect( rtfm.constructTree( string ) ).toEqual( expected );
@@ -214,11 +191,7 @@ describe( 'rtfm', function() {
     describe( 'When rendering an array of inline elements', function() {
 
         it( 'should construct the string', function() {
-            var inlinePlugin = {
-                output: function( string ) {
-                    return '<strong>' + string + '</strong>';
-                }
-            };
+            var inlinePlugin = mock.createInlinePlugin();
             rtfm.registerInlinePlugin( 'bold', inlinePlugin );
             var elements = [
                 {
@@ -242,5 +215,34 @@ describe( 'rtfm', function() {
         });
 
     });
+
+    var mock = {
+        createInlinePlugin: function() {
+            return {
+                register: function( string ) {
+                    var parts = string.split( '*' ),
+                        elements = [],
+                        registered = false;
+
+                    if (  parts.length === 1 ) {
+                        return false;
+                    }
+
+                    for ( var i = 0, len = parts.length; i < len; ++i ) {
+                        elements.push({
+                            string: parts[ i ],
+                            register: registered
+                        });
+                        registered = !registered;
+                    }
+
+                    return elements;
+                },
+                output: function( string ) {
+                    return '<strong>' + string + '</strong>';
+                }
+            };
+        }
+    };
 
 });
