@@ -73,14 +73,12 @@ describe( 'rtfm', function() {
     describe( 'When registering a block plugin', function() {
 
         it( 'should be stored', function() {
-            var plugin = {};
-            rtfm.registerBlockPlugin( 'plugin', plugin );
+            rtfm.registerBlockPlugin( 'plugin', {} );
             expect( rtfm.blockPlugins.plugin ).toBeDefined();
         });
 
         it( 'should be registered for specific blocks', function() {
-            var plugin = mock.createBlockPlugin();
-            rtfm.registerBlockPlugin( 'plugin', plugin );
+            rtfm.registerBlockPlugin( 'plugin', mock.createBlockPlugin() );
             expect( rtfm.findBlockPlugins( 'String' ) ).toEqual([{
                 plugin: 'plugin',
                 string: 'String'
@@ -92,14 +90,12 @@ describe( 'rtfm', function() {
     describe( 'When registering an inline plugin', function() {
 
         it( 'should be stored', function() {
-            var plugin = {};
-            rtfm.registerInlinePlugin( 'plugin', plugin );
+            rtfm.registerInlinePlugin( 'plugin', {} );
             expect( rtfm.inlinePlugins.plugin ).toBeDefined();
         });
 
         it( 'should be registered for specific strings', function() {
-            var plugin = mock.createInlinePlugin();
-            rtfm.registerInlinePlugin( 'plugin', plugin );
+            rtfm.registerInlinePlugin( 'plugin', mock.createInlinePlugin() );
             expect( rtfm.findInlinePlugins( '*bold*' ) ).toEqual([
                 {
                     string: '',
@@ -164,11 +160,8 @@ describe( 'rtfm', function() {
 
             rtfm.reset();
 
-            var blockPlugin = mock.createBlockPlugin();
-            rtfm.registerBlockPlugin( 'plugin', blockPlugin );
-
-            var inlinePlugin = mock.createInlinePlugin();
-            rtfm.registerInlinePlugin( 'bold', inlinePlugin );
+            rtfm.registerBlockPlugin( 'plugin', mock.createBlockPlugin() );
+            rtfm.registerInlinePlugin( 'bold', mock.createInlinePlugin() );
 
             expect( rtfm.constructTree( string ) ).toEqual( expected );
         });
@@ -178,8 +171,7 @@ describe( 'rtfm', function() {
     describe( 'When rendering an array of inline elements', function() {
 
         it( 'should construct the string', function() {
-            var inlinePlugin = mock.createInlinePlugin();
-            rtfm.registerInlinePlugin( 'bold', inlinePlugin );
+            rtfm.registerInlinePlugin( 'bold', mock.createInlinePlugin() );
             var elements = [
                 {
                     string: 'My second ',
