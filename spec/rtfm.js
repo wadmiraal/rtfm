@@ -160,6 +160,29 @@ describe( 'rtfm', function() {
 
     });
 
+    describe( 'When rendering a syntax tree', function() {
+
+        it( 'should also work dammit', function() {
+            var tree = mock.createSyntaxTree();
+
+            rtfm.reset();
+
+            rtfm.registerBlockPlugin( 'plugin', mock.createBlockPlugin() );
+            rtfm.registerInlinePlugin( 'bold', mock.createInlinePlugin() );
+
+            expect( rtfm.output( tree ) ).toEqual( '<p>My first block</p><p>My second <strong>bold text</strong> containing block</p>' );
+
+            var documentPlugin = {
+                output: function( string ) {
+                    return '<body>' + string + '</body>';
+                }
+            }
+
+            expect( rtfm.output( tree, documentPlugin ) ).toEqual( '<body><p>My first block</p><p>My second <strong>bold text</strong> containing block</p></body>' );
+        });
+
+    });
+
     var mock = {
         createInlinePlugin: function() {
             return {
