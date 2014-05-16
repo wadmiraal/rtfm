@@ -121,49 +121,14 @@ describe( 'rtfm', function() {
     describe( 'When constructing a syntax tree', function() {
 
         it( 'should work, dammit', function() {
-            var string = 'My first block\n\n   My second *bold text* containing block';
-            var expected = {
-                originalString: string,
-                blocks: [
-                    {
-                        blockString: 'My first block',
-                        blockPlugin: 'plugin',
-                        children: [{
-                            string: 'My first block',
-                            inlinePlugin: 'plain/text'
-                        }]
-                    },
-                    {
-                        blockString: 'My second *bold text* containing block',
-                        blockPlugin: 'plugin',
-                        children: [
-                            {
-                                string: 'My second ',
-                                inlinePlugin: 'plain/text'
-                            },
-                            {
-                                string: 'bold text',
-                                inlinePlugin: 'bold',
-                                children: [{
-                                    string: 'bold text',
-                                    inlinePlugin: 'plain/text'
-                                }]
-                            },
-                            {
-                                string: ' containing block',
-                                inlinePlugin: 'plain/text'
-                            }
-                        ]
-                    }
-                ]
-            };
+            var tree = mock.createSyntaxTree();
 
             rtfm.reset();
 
             rtfm.registerBlockPlugin( 'plugin', mock.createBlockPlugin() );
             rtfm.registerInlinePlugin( 'bold', mock.createInlinePlugin() );
 
-            expect( rtfm.constructTree( string ) ).toEqual( expected );
+            expect( rtfm.constructTree( tree.originalString ) ).toEqual( tree );
         });
 
     });
@@ -234,6 +199,44 @@ describe( 'rtfm', function() {
                 output: function( string ) {
                     return '<p>' + string + '</p>';
                 }
+            };
+        },
+
+        createSyntaxTree: function() {
+            return {
+                originalString: 'My first block\n\n   My second *bold text* containing block',
+                blocks: [
+                    {
+                        blockString: 'My first block',
+                        blockPlugin: 'plugin',
+                        children: [{
+                            string: 'My first block',
+                            inlinePlugin: 'plain/text'
+                        }]
+                    },
+                    {
+                        blockString: 'My second *bold text* containing block',
+                        blockPlugin: 'plugin',
+                        children: [
+                            {
+                                string: 'My second ',
+                                inlinePlugin: 'plain/text'
+                            },
+                            {
+                                string: 'bold text',
+                                inlinePlugin: 'bold',
+                                children: [{
+                                    string: 'bold text',
+                                    inlinePlugin: 'plain/text'
+                                }]
+                            },
+                            {
+                                string: ' containing block',
+                                inlinePlugin: 'plain/text'
+                            }
+                        ]
+                    }
+                ]
             };
         }
     };
