@@ -91,3 +91,38 @@ To insert an image, use `[Alt text:image/path.jpg]` (the alt text is optional):
 [Kittens:path/to/kittens.jpg]
 ````
 
+Lists
+-----
+
+Unordered lists are defined as follows:
+
+````
+* My item
+* My second item
+* My third item,
+  that can span multiple lines if I wish
+````
+
+Ordered lists are defined as follows (note that when using the HTML output, the numbers are not actually relevant):
+
+````
+1. First item on the list
+2. Second item on the list
+3. Third item on the list, which
+   can span multiple lines
+````
+
+Definition lists are defined as follows:
+
+````
+- Definition title:
+  Definition body comes here. It can
+  span multiple lines.
+- Definition title 2:
+  Definition body 2
+````
+
+HTML
+----
+
+Any HTML code will just be output as is, but this is still dodgy if a tag contains complex attributes or styles. Use with caution.
