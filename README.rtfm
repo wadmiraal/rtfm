@@ -10,7 +10,7 @@ Coming soon (will be a NodeJS package).
 
 This is just for kicks. It's a new format, similar to Markdown and Textile, but specifically aimed at README files.
 
-As the name implies, this is a format for *manuals*. The interpreter will output any {{*.rtfm}} file given to it and compile it either to HTML or Markdown. The HTML version is much more fun, though.
+As the name implies, this is a format for //manuals//. The interpreter will output any {{*.rtfm}} file given to it and compile it either to HTML or Markdown. The HTML version is much more fun, though.
 
 !!!!! Syntax
 
