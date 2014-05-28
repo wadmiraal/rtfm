@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Parse .rtfm files and provide HTML output.",
   "main": "index.js",
-  "bin" : "bin/cli.js",
+  "bin": "bin/cli.js",
   "directories": {
     "test": "spec"
   },
@@ -22,7 +22,8 @@
     "minimist": ">= 0.1.0"
   },
   "devDependencies": {
-   "jasmine-node": "",
-   "should": ""
- }
+    "jasmine-node": "",
+    "should": "",
+    "coveralls": "~2.10.0"
+  }
 }
