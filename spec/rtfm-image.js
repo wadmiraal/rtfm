@@ -105,6 +105,22 @@ describe( 'rtfm image plugin', function() {
                     string: '',
                     register: false
                 }],
+                '[èé $à;.asd :http://lk/asdasd.dom/a87-_98d?a=&asd][èé $à;.asd :file:\\\\/lk/asdasd.dom/a87-_98d?a=&asd]sad': [{
+                    string: '',
+                    register: false
+                }, {
+                    string: 'èé $à;.asd ::::ALT::::http://lk/asdasd.dom/a87-_98d?a=&asd',
+                    register: true
+                }, {
+                    string: '',
+                    register: false
+                }, {
+                    string: 'èé $à;.asd ::::ALT::::file:\\\\/lk/asdasd.dom/a87-_98d?a=&asd',
+                    register: true
+                }, {
+                    string: 'sad',
+                    register: false
+                }]
             };
             for ( var string in testStrings ) {
                 expect( plugin.register( string ) ).toEqual( testStrings[ string ] );
