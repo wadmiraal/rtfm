@@ -1,6 +1,7 @@
 # rtfm
 
 [![Build Status](https://travis-ci.org/wadmiraal/rtfm.svg?branch=master)](https://travis-ci.org/wadmiraal/rtfm)
+[![Code Climate](https://codeclimate.com/github/wadmiraal/rtfm.png)](https://codeclimate.com/github/wadmiraal/rtfm)
 
 RTFM - A new format for your README files.
 
