@@ -1,5 +1,4 @@
 
-
 var rtfm = require( '../lib/rtfm' );
 
 describe( 'rtfm', function() {
@@ -179,6 +178,45 @@ describe( 'rtfm', function() {
             }
 
             expect( rtfm.output( tree, documentPlugin ) ).toEqual( '<body><p>My first block</p><p>My second <strong>bold text</strong> containing block</p></body>' );
+        });
+
+    });
+
+    describe( 'When extending the base rtfm.Plugin', function() {
+
+        it( 'it should expose new properties and methods', function() {
+            var NewPlugin = rtfm.Plugin.extend({}),
+                plugin = new NewPlugin();
+
+            expect( NewPlugin ).toBeDefined();
+            expect( NewPlugin.extend ).toBeDefined();
+            expect( plugin.register ).toBeDefined();
+        });
+
+    });
+
+    describe( 'When extending the base rtfm.BlockPlugin', function() {
+
+        it( 'it should expose new properties and methods', function() {
+            var NewPlugin = rtfm.BlockPlugin.extend({}),
+                plugin = new NewPlugin();
+
+            expect( NewPlugin ).toBeDefined();
+            expect( NewPlugin.extend ).toBeDefined();
+            expect( plugin.register ).toBeDefined();
+        });
+
+    });
+
+    describe( 'When extending the base rtfm.InlinePlugin', function() {
+
+        it( 'it should expose new properties and methods', function() {
+            var NewPlugin = rtfm.InlinePlugin.extend({}),
+                plugin = new NewPlugin();
+
+            expect( NewPlugin ).toBeDefined();
+            expect( NewPlugin.extend ).toBeDefined();
+            expect( plugin.register ).toBeDefined();
         });
 
     });
