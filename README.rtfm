@@ -1,8 +1,8 @@
 !!!!!! rtfm
 
-([Build Status:https://travis-ci.org/wadmiraal/rtfm.svg?branch=master]:https://travis-ci.org/wadmiraal/rtfm)
-([Code Climate:https://codeclimate.com/github/wadmiraal/rtfm.png]:https://codeclimate.com/github/wadmiraal/rtfm)
-([Coverage Status:https://coveralls.io/repos/wadmiraal/rtfm/badge.png?branch=master]:https://coveralls.io/r/wadmiraal/rtfm?branch=master)
+<a href="https://travis-ci.org/wadmiraal/rtfm">[Build Status:https://travis-ci.org/wadmiraal/rtfm.svg?branch=master]</a>
+<a href="https://codeclimate.com/github/wadmiraal/rtfm">[Code Climate:https://codeclimate.com/github/wadmiraal/rtfm.png]</a>
+<a href="https://coveralls.io/r/wadmiraal/rtfm?branch=master">[Coverage Status:https://coveralls.io/repos/wadmiraal/rtfm/badge.png?branch=master]</a>
 
 RTFM - A new format for your README files.
 
