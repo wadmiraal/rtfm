@@ -116,13 +116,13 @@ Definition lists are defined as follows:
 
 !!!! Code
 
-Inline code snippets are defined using {{\{\{\}\}}}:
+Inline code snippets are defined using {{\{{\}}}}:
 
 {{{
 This is a snippet: \{\{git init\}\}
 }}}
 
-Blocks of code are defined using {{\{\{\{\}\}\}}}:
+Blocks of code are defined using {{\{{\{\}\}}}}:
 
 {{{
 \{\{\{
