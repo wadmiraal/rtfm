@@ -60,6 +60,9 @@ describe( 'rtfm code plugin', function() {
                     register: false
                 }],
                 '{{!! sa\\{{lk}}djla sad': [{
+                    string: '',
+                    register: false
+                }, {
                     string: '!! sa{{lk',
                     register: true
                 }, {
@@ -67,8 +70,14 @@ describe( 'rtfm code plugin', function() {
                     register: false
                 }],
                 '{{!! sa\\{{lk}}': [{
+                    string: '',
+                    register: false
+                }, {
                     string: '!! sa{{lk',
                     register: true
+                }, {
+                    string: '',
+                    register: false
                 }],
                 '!!!!{{!! sa\\{{lk}}djla sad': [{
                     string: '!!!!',
@@ -80,11 +89,11 @@ describe( 'rtfm code plugin', function() {
                     string: 'djla sad',
                     register: false
                 }],
-                '!!!!{{!! sa\\}}lk}}djla sad': [{
+                '!!!!{{!! sb\\}}lk}}djla sad': [{
                     string: '!!!!',
                     register: false
                 }, {
-                    string: '!! sa}}lk',
+                    string: '!! sb}}lk',
                     register: true
                 }, {
                     string: 'djla sad',
@@ -98,6 +107,16 @@ describe( 'rtfm code plugin', function() {
                     register: true
                 }, {
                     string: 'd!!!!',
+                    register: false
+                }],
+                '  !!!!!s{{adsa}}d!!\\}}!!': [{
+                    string: '  !!!!!s',
+                    register: false
+                }, {
+                    string: 'adsa',
+                    register: true
+                }, {
+                    string: 'd!!}}!!',
                     register: false
                 }],
                 '!!!{{!}}!!!sadas\\{{das': [{
