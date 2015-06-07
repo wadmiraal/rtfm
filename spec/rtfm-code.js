@@ -129,6 +129,22 @@ describe( 'rtfm code plugin', function() {
                     string: '!!!sadas{{das',
                     register: false
                 }],
+                'a code example {{\\{{code here\\}}}} that contains the {{\\{{tags\\}}}}': [{
+                    string: 'a code example ',
+                    register: false
+                }, {
+                    string: '{{code here}}',
+                    register: true
+                }, {
+                    string: ' that contains the ',
+                    register: false
+                }, {
+                    string: '{{tags}}',
+                    register: true
+                }, {
+                    string: '',
+                    register: false
+                }]
             };
             for ( var string in testStrings ) {
                 expect( plugin.register( string ) ).toEqual( testStrings[ string ] );
