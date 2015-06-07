@@ -1,7 +1,7 @@
 language: node_js
 node_js:
+  - "0.12"
   - "0.11"
   - "0.10"
-  - "0.8"
-  - "0.6"
+  - "iojs"
 after_script: NODE_ENV=test ./node_modules/istanbul/lib/cli.js cover ./node_modules/jasmine-node/bin/jasmine-node -- --matchall spec  && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
