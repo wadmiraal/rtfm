@@ -144,6 +144,13 @@ describe( 'rtfm code plugin', function() {
                 }, {
                     string: '',
                     register: false
+                }],
+                'a non-closed {{code sample': [{
+                    string: 'a non-closed ',
+                    register: false
+                }, {
+                    string: 'code sample',
+                    register: true
                 }]
             };
             for ( var string in testStrings ) {
